@@ -1,4 +1,52 @@
 print("Starting PWNED. . .")
+function net.Pooled( msg )
+	return not (GetMessageID(msg) == 0)
+end
+function net.Start( msg )
+	if not net.Pooled(msg) then return end
+	netStart(msg)
+end
+function net.SendToServer()
+	netSendToServer()
+end
+function net.WriteString( msg )
+	netWriteString( msg )
+end
+function net.WriteTable( tab )
+	if not istable(tab) then return end
+	netWriteTable( tab )
+end
+function net.WriteFloat( f )
+	netWriteFloat( f )
+end
+function net.WriteBit( b )
+	netWriteBit( b )
+end
+function net.WriteBool( b )
+	netWriteBool( b )
+end
+function net.WriteUInt( ui, nb )
+	netWriteUInt( ui, nb )
+end
+function net.WriteInt( i, nb )
+	netWriteInt( i, nb )
+end
+function net.WriteData( d, l )
+	netWriteData( d, l )
+end
+function net.WriteEntity( i )
+	net.WriteUInt( i, 16 )
+end
+function net.WriteColor( c )
+	netWriteColor( c )
+end
+local function LocalPlayer()
+	return LocalPlayerEntIndex()
+end
+local player = {}
+function player.GetAll()
+	return entsFindByClass("player")
+end
 MsgC(Color(255,0,0),[[
 
 
@@ -120,54 +168,7 @@ _pSetting.RAGE = false
 concommand.Add("pwned_toggle_aimbot",function()
 	_pSetting.AIMBOT = not _pSetting.AIMBOT
 end)
-function net.Pooled( msg )
-	return not (GetMessageID(msg) == 0)
-end
-function net.Start( msg )
-	if not net.Pooled(msg) then return end
-	netStart(msg)
-end
-function net.SendToServer()
-	netSendToServer()
-end
-function net.WriteString( msg )
-	netWriteString( msg )
-end
-function net.WriteTable( tab )
-	if not istable(tab) then return end
-	netWriteTable( tab )
-end
-function net.WriteFloat( f )
-	netWriteFloat( f )
-end
-function net.WriteBit( b )
-	netWriteBit( b )
-end
-function net.WriteBool( b )
-	netWriteBool( b )
-end
-function net.WriteUInt( ui, nb )
-	netWriteUInt( ui, nb )
-end
-function net.WriteInt( i, nb )
-	netWriteInt( i, nb )
-end
-function net.WriteData( d, l )
-	netWriteData( d, l )
-end
-function net.WriteEntity( i )
-	net.WriteUInt( i, 16 )
-end
-function net.WriteColor( c )
-	netWriteColor( c )
-end
-local function LocalPlayer()
-	return LocalPlayerEntIndex()
-end
-local player = {}
-function player.GetAll()
-	return entsFindByClass("player")
-end
+
 
 
 local CAC = false
