@@ -1,4 +1,5 @@
 print("Starting PWNED. . .")
+local net = {}
 function net.Pooled( msg )
 	return not (GetMessageID(msg) == 0)
 end
@@ -149,7 +150,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	_oGD(servername, serverurl, mapname, maxplayers, steamid, gamemode)
 end
 surface.CreateFont("ESPFont", {size=18, bold=14})
-local net = {}
+
 local _pSetting = {}
 _pSetting.Colors = {}
 _pSetting.Colors.Menu = Color(0, 0, 0, 200)
